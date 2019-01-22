@@ -7,6 +7,7 @@
   grid-template: repeat(6, 1fr) / repeat(4, 1fr);
   background-color: rgb(45, 45, 45);
   border: 10px solid rgb(45, 45, 45);
+  border-radius: 18px;
 }
 
 div#display {
@@ -77,6 +78,7 @@ div#display {
 
 .btn7 {
   grid-area: 2 / 1 / 3 / 2;
+  border-radius: 10px 0 0 0;
 }
 
 .btn8 {
@@ -93,6 +95,7 @@ div#display {
 
 .btndivide {
   grid-area: 2 / 4 / 3 / 5;
+  border-radius: 0 10px 0 0;
 }
 
 .btnmultiply {
@@ -109,6 +112,7 @@ div#display {
 
 .btnequal {
   grid-area: 6 / 4 / 7 / 5;
+  border-radius: 0 0 10px 0;
 }
 
 .btnpossneg {
@@ -117,4 +121,5 @@ div#display {
 
 .btnclear {
   grid-area: 6 / 1 / 7 / 3;
+  border-radius: 0 0 0 10px;
 }
