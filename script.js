@@ -33,8 +33,6 @@ const display = document.querySelector('#calculator-input');
 buttons.forEach((button) => {
   button.addEventListener('click', displayInput)
 });
-window.addEventListener('keydown', displayInput);
-
 
 let input = [];
 let values = [];
@@ -72,8 +70,10 @@ function displayInput(e) {
         performOperation();
       }
   } else {
-      input.push(`${(button)}`);
-      display.textContent = `${(input.join(""))}`;
+      if(input.length < 12) {
+        input.push(`${(button)}`);
+        display.textContent = `${(input.join(""))}`;
+      }
     }
 }
 
@@ -113,11 +113,27 @@ function performOperation() {
   const num1 = values[0];
   const num2 = values[1];
   const result = operate(operator, num1, num2)
+  const prettyResult = checkResult(result);
   clearAll();
-  display.textContent = `${result}`;
+  display.textContent = `${prettyResult}`;
   values.push(result);
 }
 
 function storeOperator(button) {
   operators.push(button);
+}
+
+function checkResult(result) {
+  if(Number.isInteger(result)) {
+    return result;
+  } else {
+    let resultString = result.toString();
+    let modifiedNum;
+    if(resultString.length > 10) {
+      modifiedNum = parseFloat(resultString.slice(0, 14));
+    } else {
+        modifiedNum = result;
+    }
+    return modifiedNum.toPrecision();
+  }
 }
