@@ -1,0 +1,120 @@
+#calculator {
+  margin: 0 auto;
+  display: grid;
+  height: 600px;
+  width: 400px;
+  grid-gap: 1px;
+  grid-template: repeat(6, 1fr) / repeat(4, 1fr);
+  background-color: rgb(45, 45, 45);
+  border: 2px solid rgb(15, 15, 15);
+}
+
+div#display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  grid-area: 1 / 1 / 2 / 5;
+  background-color: rgb(45, 45, 45);
+}
+
+#calculator-input {
+  color: white;
+  font-size: 2.5rem;
+  padding-right: 1rem;
+}
+
+.button {
+  border-radius: 0;
+  border: 0;
+  font-size: 1.25rem;
+}
+
+.button-numbers {
+  background-color: rgb(246, 246, 246);
+}
+
+.button-numbers:hover {
+  background-color: rgb(213, 210, 210);
+}
+
+.btnoperator {
+  background-color: rgb(255, 172, 62);
+}
+
+.btnoperator:hover {
+  background-color: rgb(209, 139, 47);
+}
+
+.btn0 {
+  grid-area: 5 / 1 / 6 / 3;
+}
+
+.btn1 {
+  grid-area: 4 / 1 / 5 / 2;
+}
+
+.btn2 {
+  grid-area: 4 / 2 / 5 / 3;
+}
+
+.btn3 {
+  grid-area: 4 / 3 / 5 / 4;
+}
+
+.btn4 {
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.btn5 {
+  grid-area: 3 / 2 / 4 / 3;
+}
+
+.btn6 {
+  grid-area: 3 / 3 / 4 / 4;
+}
+
+.btn7 {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.btn8 {
+  grid-area: 2 / 2 / 3 / 3;
+}
+
+.btn9 {
+  grid-area: 2 / 3 / 3 / 4;
+}
+
+.btndecimal {
+  grid-area: 5 / 3 / 6 / 4;
+}
+
+.btndivide {
+  grid-area: 2 / 4 / 3 / 5;
+}
+
+.btnmultiply {
+  grid-area: 3 / 4 / 4 / 5;
+}
+
+.btnsubtract {
+  grid-area: 4 / 4 / 5 / 5;
+}
+
+.btnaddition {
+  grid-area: 5 / 4 / 6 / 5;
+}
+
+.btnequal {
+  grid-area: 6 / 4 / 7 / 5;
+}
+
+.btnpossneg {
+  grid-area: 6 / 3 / 7 / 4;
+}
+
+.btnclear {
+  grid-area: 6 / 1 / 7 / 3;
+}
