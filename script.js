@@ -35,9 +35,9 @@ buttons.forEach((button) => {
 });
 
 let input = [];
-let values = [];
+let operands = [];
 let operators = [];
-let special = [];
+let displayValues = [];
 
 function displayInput(e) {
   const button = e.target.textContent;
@@ -46,84 +46,75 @@ function displayInput(e) {
     clearAll();
   } else if(button === "+" || button === "-") {
       if(input.length > 0) {
-        storeValue();
+        storeOperand();
+        storeOperator(button);
         clearInput();
       }
-      if(values.length > 1) {
-        performOperation();
-      }
-      storeOperator(button);
   } else if(button === "/" || button === "*") {
-      storeOperator(button);
-      if(operators.length > 1) {
-        special.push(Number(input.join("")));
+      if(input.length > 0) {
+        storeOperand();
+        storeOperator(button);
+        clearInput();
       }
-      if(input.length > 0 && (operators.length < 2)) {
-        storeValue();
-      }
-      clearInput();
   } else if(button === "=") {
-      storeValue();
-      if(operators.length > 1) {
-        performSpecialOperation();
-      } else {
-        performOperation();
+      if(input.length > 0) {
+        storeOperand();
       }
+      performOperation();
   } else {
-      if(input.length < 12) {
-        input.push(`${(button)}`);
-        display.textContent = `${(input.join(""))}`;
-      }
-    }
-}
-
-function clearAll() {
-  input.splice(0, input.length);
-  values.splice(0, values.length);
-  operators.splice(0, operators.length);
-  special.splice(0, special.length);
-  display.textContent = "";
-}
-
-function storeValue() {
-  if(operators.length < 2){
-    values.push(Number(input.join("")));
+      storeInput(button);
   }
 }
 
-function clearInput() {
-  input.splice(0, input.length);
+function clearAll() {
+  input.length = 0;
+  operators.length = 0;
+  operands.length = 0;
+  displayValues.length = 0;
+  display.textContent = "";
 }
 
-function performSpecialOperation() {
-    special.push(Number(input.join("")));
-    clearInput();
-    let operator = operators[1];
-    let num1 = special[0];
-    let num2 = special[1];
-    let specialNum = operate(operator, num1, num2);
-    values.push(specialNum);
-    operators.splice(1, 2);
-    special.splice(0, special.length);
-    performOperation();
-}
-
-function performOperation() {
-  const operator = operators[0];
-  const num1 = values[0];
-  const num2 = values[1];
-  const result = operate(operator, num1, num2)
-  const prettyResult = checkResult(result);
-  clearAll();
-  display.textContent = `${prettyResult}`;
-  values.push(result);
+function storeInput(button) {
+  input.push(`${(button)}`);
+  displayValues.push(`${button}`);
+  display.textContent = `${(displayValues.join(""))}`;
 }
 
 function storeOperator(button) {
-  operators.push(button);
+  operators.push(`${(button)}`);
+  displayValues.push(`${button}`);
+  display.textContent = `${(displayValues.join(""))}`;
 }
 
-function checkResult(result) {
+function storeOperand() {
+  operands.push(input.reduce((value, input) => value + input));
+}
+
+function clearInput() {
+  input.length = 0;
+}
+
+function performOperation() {
+  // iterate over all operators
+  let result = 0;
+  while (operators.length > 0) {
+    const special = operators.findIndex(operators => operators === "*" || operators === "/");
+    if (special != -1) {
+      result = operate(operators[special], +operands[special], +operands[special + 1]);
+      operands.splice(special, 2);
+      operators.splice(special, 1);
+    } else {
+      result = operate(operators[0], +operands[0], +operands[1]);
+      operands.splice(0, 2);
+      operators.splice(0, 1);
+    }
+    operands.splice(special, 0, result);
+  }
+    clearAll();
+    storeInput(result);
+}
+
+/*function checkResult(result) {
   if(Number.isInteger(result)) {
     return result;
   } else {
@@ -136,4 +127,4 @@ function checkResult(result) {
     }
     return modifiedNum.toPrecision();
   }
-}
+}*/
