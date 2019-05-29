@@ -1,3 +1,7 @@
+let input = [];
+let operands = [];
+let operators = [];
+
 function add(num1, num2) {
   return num1 + num2;
 }
@@ -28,21 +32,11 @@ function operate(operator, num1, num2) {
   }
 }
 
-const buttons = document.querySelectorAll('.button');
-const display = document.querySelector('#calculator-input');
-buttons.forEach((button) => {
-  button.addEventListener('click', displayInput)
-});
+function displayInput(dataInput) {
+  const button = dataInput;
+  const validInputCheck = /\d+|\./;
 
-let input = [];
-let operands = [];
-let operators = [];
-let displayValues = [];
-
-function displayInput(e) {
-  const button = e.target.textContent;
-
-  if(button === "CE") {
+  if(button === "CE" || button === "c") {
     clearAll();
   } else if(button === "+" || button === "-") {
       if(input.length > 0) {
@@ -56,12 +50,14 @@ function displayInput(e) {
         storeOperator(button);
         clearInput();
       }
-  } else if(button === "=") {
+  } else if(button === "=" || button === "Enter") {
       if(input.length > 0) {
         storeOperand();
       }
-      performOperation();
-  } else {
+      if(operators.length > 0) {
+        performOperation();
+      }
+  } else if (validInputCheck.test(button)) {
       storeInput(button);
   }
 }
@@ -70,20 +66,17 @@ function clearAll() {
   input.length = 0;
   operators.length = 0;
   operands.length = 0;
-  displayValues.length = 0;
   display.textContent = "";
 }
 
 function storeInput(button) {
   input.push(`${(button)}`);
-  displayValues.push(`${button}`);
-  display.textContent = `${(displayValues.join(""))}`;
+  display.textContent += `${button}`;
 }
 
 function storeOperator(button) {
   operators.push(`${(button)}`);
-  displayValues.push(`${button}`);
-  display.textContent = `${(displayValues.join(""))}`;
+  display.textContent += `${button}`;
 }
 
 function storeOperand() {
@@ -114,17 +107,9 @@ function performOperation() {
     storeInput(result);
 }
 
-/*function checkResult(result) {
-  if(Number.isInteger(result)) {
-    return result;
-  } else {
-    let resultString = result.toString();
-    let modifiedNum;
-    if(resultString.length > 10) {
-      modifiedNum = parseFloat(resultString.slice(0, 14));
-    } else {
-        modifiedNum = result;
-    }
-    return modifiedNum.toPrecision();
-  }
-}*/
+window.addEventListener('keydown', e => displayInput(e.key));
+const buttons = document.querySelectorAll('.button');
+const display = document.querySelector('#calculator-input');
+buttons.forEach((button) => {
+  button.addEventListener('click', e => displayInput(e.target.textContent));
+});
