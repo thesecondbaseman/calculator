@@ -34,7 +34,11 @@ function operate(operator, num1, num2) {
 
 function displayInput(dataInput) {
   const button = dataInput;
-  const validInputCheck = /\d+|\./;
+  const validInputCheck = /^\d+|\./;
+  const key = document.querySelector(`button[data-button="${dataInput}"]`);
+  if(key) {
+    key.classList.add('button-active');
+  }
 
   if(button === "CE" || button === "c") {
     clearAll();
@@ -92,7 +96,7 @@ function performOperation() {
   let result = 0;
   while (operators.length > 0) {
     const special = operators.findIndex(operators => operators === "*" || operators === "/");
-    if (special != -1) {
+    if (special !== -1) {
       result = operate(operators[special], +operands[special], +operands[special + 1]);
       operands.splice(special, 2);
       operators.splice(special, 1);
@@ -107,9 +111,15 @@ function performOperation() {
     storeInput(result);
 }
 
+function removeTransition(e) {
+  this.classList.remove('button-active');
+}
+
+// TODO: fix number being added to display when focus
 window.addEventListener('keydown', e => displayInput(e.key));
 const buttons = document.querySelectorAll('.button');
 const display = document.querySelector('#calculator-input');
-buttons.forEach((button) => {
+buttons.forEach(button => {
   button.addEventListener('click', e => displayInput(e.target.textContent));
+  button.addEventListener('transitionend', removeTransition);
 });

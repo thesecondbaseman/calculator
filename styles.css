@@ -30,6 +30,12 @@ div#display {
   border-radius: 0;
   border: 0;
   font-size: 1.25rem;
+  transition: .1s ease;
+}
+
+.button-active {
+  transform: scale(1.1, 1.1);
+  background: rgb(213, 210, 210) !important;
 }
 
 .button-numbers {
