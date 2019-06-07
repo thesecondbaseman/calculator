@@ -35,6 +35,7 @@ function operate(operator, num1, num2) {
 function displayInput(dataInput) {
   const button = dataInput;
   const validInputCheck = /^\d+|\./;
+  const invalidDecimalNumberCheck = /\.{2,}|\.\d+\./g;
   const key = document.querySelector(`button[data-button="${dataInput}"]`);
   if(key) {
     key.classList.add('button-active');
@@ -55,6 +56,7 @@ function displayInput(dataInput) {
         clearInput();
       }
   } else if(button === "=" || button === "Enter") {
+      if(operands.length === 0) return
       if(input.length > 0) {
         storeOperand();
       }
@@ -62,6 +64,7 @@ function displayInput(dataInput) {
         performOperation();
       }
   } else if (validInputCheck.test(button)) {
+      if(invalidDecimalNumberCheck.test(input.join('') + button)) return
       storeInput(button);
   }
 }
