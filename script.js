@@ -63,6 +63,11 @@ function displayInput(dataInput) {
       if(operators.length > 0) {
         performOperation();
       }
+  } else if(button === 'Backspace') {
+      if(input.length > 0) {
+        input.pop();
+        display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+      }
   } else if (validInputCheck.test(button)) {
       if(invalidDecimalNumberCheck.test(input.join('') + button)) return
       storeInput(button);
