@@ -123,8 +123,15 @@ function removeTransition(e) {
   this.classList.remove('button-active');
 }
 
-// TODO: fix number being added to display when focus
-window.addEventListener('keydown', e => displayInput(e.key));
+window.addEventListener('keydown', e => {
+  displayInput(e.key);
+  if(e.keyIdentifier === 'Enter' || e.keyCode === 13) {
+    if(e.target.nodeName === 'BUTTON' && e.target.type === 'submit') {
+      e.preventDefault();
+    }
+  }
+});
+
 const buttons = document.querySelectorAll('.button');
 const display = document.querySelector('#calculator-input');
 buttons.forEach(button => {

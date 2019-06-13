@@ -100,3 +100,12 @@ hr {
 input, select {
     vertical-align:middle;
 }
+
+/* remove outline chrome & firefox */
+button::-moz-focus-inner {
+  border: 0;
+}
+
+button {
+  outline: 0;
+}
